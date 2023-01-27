@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
@@ -23,25 +24,28 @@ app.post('/register',async (req, res) => {
   
   // Insert the data into the database
 con.query("USE accounts", function (err) {
-  if (err) throw err;
-    console.log("Using accounts");
+  if (err) throw err
 });
+
   con.query("SELECT id FROM account WHERE id=(select max(id) from account)", function (err, result) {
     if (err) throw err;
       maxid = (JSON.parse(JSON.stringify(result)))[0].id + 1
-      console.log("Variables set");
       info = [maxid, req.body.name, hashedPassword, 20];
       
       con.query("INSERT INTO account (id, name, password, money) VALUES (?, ?, ?, ?)", info, function (err, result){
         if (err) throw err;
-          console.log("Number of records inserted: " + result.affectedRows);
+          console.log(req.body.name + " Just Got Registered");
           return res.json({ status: 'success' });
       });
     });
   });
 
 app.get('/', (req, res) => {
-  res.send('Go to http://localhost:3000/register.html');
+  fs.readFile('public/HomePage.html', function(err, data) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
 });
 
 app.use(express.static('public'));
