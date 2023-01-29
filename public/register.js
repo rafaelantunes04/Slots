@@ -33,7 +33,10 @@ function start() {
   .then(response => response.json())
   .then(response => {
     if (response.status === 'success') {
-      notifier.innerHTML = 'Successfully registered';
+      notifier.innerHTML = 'Successfully registered, Redirecting';
+      setTimeout(() => {
+        window.location.assign('http://localhost:3000/login.html');
+    }, 3000);
     } else {
       notifier.innerHTML = 'Error: ' + response.message;
     }
