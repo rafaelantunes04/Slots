@@ -6,11 +6,11 @@ regbutton.addEventListener('click', function() {document.location='register.html
 logbutton.addEventListener('click', start)
 
 function start() {
-    var data = {
-        name: document.getElementById("name").value,
-        password: document.getElementById("pass").value
-    };
-    // Validate the data on the client side
+  var data = {
+    name: document.getElementById("name").value,
+    password: document.getElementById("pass").value
+  };
+
   if (data.name == "") {
     notifier.innerHTML = "You have to insert a name";
     return;
@@ -20,29 +20,29 @@ function start() {
     return;
   }
   
-  // Make an HTTP request to the server to register the user
   fetch('/login', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' }
   })
   .then(async response => {
-    if (!response.ok) {
-      throw new Error(`Request failed with status code: ${response.status}`);
-    }
     const json = await response.json();
     if (json.status === 'success') {
-      notifier.style = 'color:rgb(0, 255, 0);'
+      notifier.style = 'color:rgb(0, 255, 0);';
       notifier.innerHTML = 'Successfully logged in!';
+      sessionStorage.setItem("name", data.name);
+      sessionStorage.setItem("money", json.money);
       setTimeout(() => {
         window.location.assign('http://localhost:3000/slots.html');
       }, 3000);
-    } else if (json.status === 'error') {
+    } 
+    else if (json.status === 'error') {
+      notifier.style = 'color:rgb(255, 0, 0)';
       notifier.innerHTML = json.message;
     }
   })
   .catch(error => {
     console.error('Error:', error);
-    notifier.innerHTML = 'Error: ' + error;
+    notifier.innerHTML = 'Error logging in: ' + error;
   });
 }

@@ -10,7 +10,6 @@ function start() {
     confirmPassword: document.getElementById("pass1").value
   };
   
-  // Validate the data on the client side
   if (data.name == "") {
     notifier.innerHTML = "You have to insert a name";
     return;
@@ -24,7 +23,6 @@ function start() {
     return;
   }
   
-  // Make an HTTP request to the server to register the user
   fetch('/register', {
     method: 'POST',
     body: JSON.stringify(data),
@@ -34,6 +32,7 @@ function start() {
   .then(response => {
     if (response.status === 'success') {
       notifier.innerHTML = 'Successfully registered, Redirecting';
+      notifier.style = 'color:rgb(0, 255, 0);'
       setTimeout(() => {
         window.location.assign('http://localhost:3000/login.html');
     }, 3000);
