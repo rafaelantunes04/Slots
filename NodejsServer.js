@@ -57,7 +57,7 @@ app.post('/slots', async (req, res) => {
         let y3 = randomSymbol();
         let newmoney = 0;
         let message = "";
-        if (y1 == y2 && y2 == y3) {
+        if (y1 == y2 && y2 == y3 && y1 == y3) {
           newmoney = (req.body.money * 5);
           message = "+" + newmoney + " €";
         } 
@@ -98,7 +98,6 @@ app.post('/register', async (req, res) => {
 
   con.query("SELECT * FROM account WHERE name = ?", [req.body.name], async (err, result) => {
     if (err) throw err;
-      console.log(err)
 
     if (result.length > 0) {
       return res.status(400).json({ status: 'error', message: 'Name already exists, please use another name' });
@@ -110,12 +109,14 @@ app.post('/register', async (req, res) => {
 
       con.query("SELECT id FROM account WHERE id=(select max(id) from account)", function (err, result) {
         if (err) throw err;
-        maxid = (JSON.parse(JSON.stringify(result)))[0].id + 1
+        if (result.length > 0) {
+          maxid = (JSON.parse(JSON.stringify(result)))[0].id + 1
+        } else {
+          maxid = 0
+        }
         info = [maxid, req.body.name, hashedPassword, 20];
-      
-
-      con.query("INSERT INTO account (id, name, password, money) VALUES (?, ?, ?, ?)", info, function (err, result){
-        if (err) throw err;
+        con.query("INSERT INTO account (id, name, password, money) VALUES (?, ?, ?, ?)", info, function (err, result){
+          if (err) throw err;
           console.log(req.body.name + " Just Got Registered");
           return res.json({ status: 'success' });
         });
