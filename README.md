@@ -11,7 +11,7 @@ How to setup the program so you can host it:
 
 3. Start the server.  
   -Open the console;  
-  -Go to the folder location of the program (cd <folder location>);  
+  -Go to the folder location of the program (cd folder location);  
   -Write 'node NodejsServer.js'.
 
 12/02/2023  
