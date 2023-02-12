@@ -1,10 +1,10 @@
 # Slots
 Slots Site
 
-How to setup the program so you can host it:
-1. Create a mysql database.
-  -Create db with the name accounts;
-  -Create table with name account and 4 columns (id: int/ name: varchar(255)/ password: varchar(255)/money: int).
+How to setup the program so you can host it:  
+1. Create a mysql database.  
+-Create db with the name accounts;  
+-Create table with name account and 4 columns (id: int/ name: varchar(255)/ password: varchar(255)/money: int).
 
 2. Change settings of the program (mysqlmodule.js).
   -Put your db credentials so the program can access the db.
