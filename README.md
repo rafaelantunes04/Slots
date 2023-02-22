@@ -1,5 +1,5 @@
 # Slots
-Slots Site
+Slots Site made with NodeJS, Express and MySQL.
 
 How to setup the program so you can host it:  
 1. Create a mysql database.  
